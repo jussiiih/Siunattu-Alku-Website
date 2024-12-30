@@ -20,20 +20,20 @@ jobs:
         run: npm install
 
   linting:
+    needs: preparation
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-    node-version: '20'
-    steps:
+          node-version: '20'
       - name: Check front end
         run: cd client
         run: npm run lint
 
   tag_release:
     if: ${{ !contains(toJson(github.event.commits.*.message), '#skip') }}
-    needs: [simple_deployment_pipeline]
+    needs: [linting]
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4
