@@ -4,16 +4,44 @@ import Introduction from "./components/Introduction"
 import Info from "./components/Info"
 import Contact from "./components/Contact"
 import Footer from "./components/Footer"
+import HomePage from "./components/HomePage"
 
-const App = () => (
-  <div>
-    <Title/>
-    <Prices/>
-    <Introduction/>
-    <Info/>
-    <Contact/>
-    <Footer/>
-  </div>
-)
+import {
+  BrowserRouter as Router,
+  Routes, Route, Link, useParams, useNavigate
+} from 'react-router-dom'
+
+
+const App = () => {
+
+  const padding = {
+    padding: 5
+  }
+
+  return (
+    <Router>
+      <Title/>
+      
+      <div>
+        <Link style ={padding} to='/'>Etusivu</Link>
+        <Link style ={padding} to='/hinnasto'>Hinnasto</Link>
+        <Link style ={padding} to='/ennimaria'>Enni-Maria</Link>
+        <Link style ={padding} to='/mikadoula'>Mikä doula?</Link>
+        <Link style ={padding} to='/yhteys'>Ota yhteyttä</Link>
+      </div>
+
+      <Routes>
+        <Route path='/' element={<HomePage/>}/>
+        <Route path='/hinnasto' element={<Prices/>}/>
+        <Route path='/ennimaria' element={<Introduction/>}/>
+        <Route path='/mikadoula' element={<Info/>}/>
+        <Route path='/yhteys' element={<Contact/>}/>
+      </Routes>
+      
+      <Footer/>
+    
+    </Router>
+  )
+}
 
 export default App
