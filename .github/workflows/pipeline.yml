@@ -1,0 +1,46 @@
+name: Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
+
+jobs:
+  preparation:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install depedencies
+        run: npm install
+
+  linting:
+    runs-on: ubuntu-20.04
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+    node-version: '20'
+    steps:
+      - name: Check front end
+        run: cd client
+        run: npm run lint
+
+  tag_release:
+    if: ${{ !contains(toJson(github.event.commits.*.message), '#skip') }}
+    needs: [simple_deployment_pipeline]
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Bump version and push tag
+        if: ${{ github.event_name == 'push' }}
+        uses: anothrNick/github-tag-action@f278d49d30cdd8775cc3e7dd00b5ee11686ee297
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch
