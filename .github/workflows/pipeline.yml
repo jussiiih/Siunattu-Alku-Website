@@ -20,7 +20,7 @@ jobs:
         run: |
           cd client
           npm install
-      - name: Check front end
+      - name: Check front end style
         run: |
           cd client
           npm run lint
