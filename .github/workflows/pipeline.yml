@@ -28,8 +28,9 @@ jobs:
         with:
           node-version: '20'
       - name: Check front end
-        run: cd client
-        run: npm run lint
+        run: |
+          cd client
+          npm run lint
 
   tag_release:
     if: ${{ !contains(toJson(github.event.commits.*.message), '#skip') }}
