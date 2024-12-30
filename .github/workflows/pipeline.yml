@@ -16,8 +16,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Install depedencies
-        run: npm install
+      - name: Install depedencies client
+        run: |
+          cd client
+          npm install
 
   linting:
     needs: preparation
