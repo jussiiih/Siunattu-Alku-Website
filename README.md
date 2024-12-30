@@ -1,2 +1,1 @@
-# siunattu-alku-website
-Repository for website of Siunattu Alku doula services
+# Website for Siunattu Alku doula services
