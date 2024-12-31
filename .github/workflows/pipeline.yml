@@ -20,6 +20,9 @@ jobs:
         run: |
           cd client
           npm install
+      - name: Install depedencies server
+        run: |
+          npm install
       - name: Check style
         run:
           npm run lint
