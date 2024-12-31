@@ -6,10 +6,7 @@ import Contact from "./components/Contact"
 import Footer from "./components/Footer"
 import HomePage from "./components/HomePage"
 
-import {
-  BrowserRouter as Router,
-  Routes, Route, Link, useParams, useNavigate
-} from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import { useState } from "react"
 
 
