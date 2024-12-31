@@ -20,9 +20,8 @@ jobs:
         run: |
           cd client
           npm install
-      - name: Check front end style
-        run: |
-          cd client
+      - name: Check style
+        run:
           npm run lint
 
   tag_release:

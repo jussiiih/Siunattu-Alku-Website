@@ -10,9 +10,39 @@ import {
   BrowserRouter as Router,
   Routes, Route, Link, useParams, useNavigate
 } from 'react-router-dom'
+import { useState } from "react"
 
 
 const App = () => {
+
+  const [newName, setNewName] = useState('')
+  const [newPhoneNumber, setNewPhoneNumber] = useState('')
+  const [newEmail, setNewEmail] = useState('')
+  const [newContent, setNewContent] = useState('')
+
+  const handleNameChange = (event) => {
+    setNewName(event.target.value)
+  }
+  const handlePhoneNumberChange = (event) => {
+    setNewPhoneNumber(event.target.value)
+  }
+  const handleEmailChange = (event) => {
+    setEmailName(event.target.value)
+  }
+  const handleContentChange = (event) => {
+    setNewContent(event.target.value)
+  }
+
+  const sendMessage = (event) => {
+    event.preventDefault()
+    const newMessage = {
+      name: newName,
+      phoneNumber: newPhoneNumber,
+      email: newEmail,
+      content: newContent
+    }
+  }
+
 
   const padding = {
     padding: 5
@@ -35,7 +65,12 @@ const App = () => {
         <Route path='/hinnasto' element={<Prices/>}/>
         <Route path='/ennimaria' element={<Introduction/>}/>
         <Route path='/mikadoula' element={<Info/>}/>
-        <Route path='/yhteys' element={<Contact/>}/>
+        <Route path='/yhteys' element={<Contact
+          newName={newName} handleNameChange={handleNameChange}
+          newPhoneNumber={newPhoneNumber} handlePhoneNumberChange={handlePhoneNumberChange}
+          newEmail={newEmail} handleEmailChange={handleEmailChange}
+          newContent={newContent} handleContentChange={handleContentChange}
+          sendMessage={sendMessage}/>}/>
       </Routes>
       
       <Footer/>
