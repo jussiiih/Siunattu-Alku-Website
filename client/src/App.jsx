@@ -24,7 +24,7 @@ const App = () => {
     setNewPhoneNumber(event.target.value)
   }
   const handleEmailChange = (event) => {
-    setEmailName(event.target.value)
+    setNewEmail(event.target.value)
   }
   const handleContentChange = (event) => {
     setNewContent(event.target.value)
