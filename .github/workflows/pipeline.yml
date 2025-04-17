@@ -10,7 +10,7 @@ on:
 
 jobs:
   preparation:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -30,7 +30,7 @@ jobs:
   tag_release:
     if: ${{ !contains(toJson(github.event.commits.*.message), '#skip') }}
     needs: [preparation]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
