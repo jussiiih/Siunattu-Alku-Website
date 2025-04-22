@@ -5,10 +5,11 @@ import Info from "./components/Info"
 import Contact from "./components/Contact"
 import Footer from "./components/Footer"
 import HomePage from "./components/HomePage"
+import Admin from "./components/Admin"
 
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-import { useState } from "react"
-
+import { useState, useEffect } from "react"
+import messageService from "./services/messages"
 
 const App = () => {
 
@@ -16,6 +17,7 @@ const App = () => {
   const [newPhoneNumber, setNewPhoneNumber] = useState('')
   const [newEmail, setNewEmail] = useState('')
   const [newContent, setNewContent] = useState('')
+  const [messages, setMessages] = useState([])
 
   const handleNameChange = (event) => {
     setNewName(event.target.value)
@@ -40,6 +42,13 @@ const App = () => {
     }
   }
 
+  useEffect(() => {
+    messageService
+    .getAllMessages()
+    .then(response => {
+      setMessages(response)
+    })
+  }, [])
 
   const padding = {
     padding: 5
@@ -68,6 +77,9 @@ const App = () => {
           newEmail={newEmail} handleEmailChange={handleEmailChange}
           newContent={newContent} handleContentChange={handleContentChange}
           sendMessage={sendMessage}/>}/>
+        <Route path='/admin' element={<Admin
+          messages={messages}/>}/>
+
       </Routes>
       
       <Footer/>
