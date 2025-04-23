@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
     "name": "Marjatta",
-    "phonenumber": "",
+    "phonenumber": "040123456",
     "email": "example@email.com",
     "content": "This is a test message"
 }

@@ -40,6 +40,24 @@ const App = () => {
       email: newEmail,
       content: newContent
     }
+
+    messageService
+      .createMessage(newMessage)
+      .then(response => {
+        setMessages(messages.concat(response))
+        setNewName('')
+        setNewEmail('')
+        setNewPhoneNumber('')
+        setNewContent('')
+      })
+  }
+
+  const deleteMessage = (messageToBeRemoved) => {
+    messageService
+      .deleteMessage(messageToBeRemoved)
+      .then(() => {
+        setMessages(messages.filter(message => message.id !== messageToBeRemoved.id))
+      })
   }
 
   useEffect(() => {
@@ -78,7 +96,7 @@ const App = () => {
           newContent={newContent} handleContentChange={handleContentChange}
           sendMessage={sendMessage}/>}/>
         <Route path='/admin' element={<Admin
-          messages={messages}/>}/>
+          messages={messages} deleteMessage={deleteMessage}/>}/>
 
       </Routes>
       
