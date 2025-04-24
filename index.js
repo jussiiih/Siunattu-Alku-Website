@@ -1,75 +1,63 @@
+require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 const app = express()
-
+const Message = require('./models/message')
 app.use(express.json())
 app.use(cors())
 
-
-let messages = [
-  {
-    id: "1",
-    timestamp: "2025-04-22T15:06:19.085Z",
-    name: "Matti",
-    phonenumber: "045123456",
-    email: "example@email.com",
-    content: "This is a test message"
-  },
-  {
-    id: "2",
-    timestamp: "2025-04-22T15:06:19.085Z",
-    name: "Pekka",
-    phonenumber: "045123456",
-    email: "example@email.com",
-    content: "This is a test message"
-  },
-  {
-    id: "3",
-    timestamp: "2025-04-22T15:06:19.085Z",
-    name: "Anna",
-    phonenumber: "045123456",
-    email: "example@email.com",
-    content: "This is a test message"
-  }
-]
-
 app.get('/api/messages', (request, response) => {
-  response.json(messages)
+  Message.find({})
+    .then(messages => {
+      response.json(messages)
+    })
 })
 
 app.post('/api/messages', (request, response) => {
-  const maxId = messages.length > 0
-  ? Math.max(...messages.map(n => Number(n.id))) 
-  : 0
+  const body = request.body
 
-  const message = request.body
-
-  if (!message.content) {
+  if (!body.content) {
     return response.status(400).json({
       error: 'content missing'
     })
   }
 
-  if (!message.phonenumber && !message.email) {
+  if (!body.phonenumber && !body.email) {
     return response.status(400).json({
       error: 'phonenumber or email needed'
     })
   }
+  const message = new Message({
+    name: body.name,
+    phoneNumber: body.name,
+    email: body.email,
+    content: body.content,
+    timestamp: new Date().toLocaleString('fi-FI', { timeZone: 'Europe/Helsinki' })
+  })
 
-  message.id = String(maxId + 1)
-
-  message.timestamp = message.timestamp = new Date().toISOString()
-
-  messages = messages.concat(message)
-  response.json(message)
+  message.save()
+    .then(savedMessage => {
+      response.json(savedMessage)
+    })
 })
 
 app.delete('/api/messages/:id', (request, response) => {
-  messages = messages.filter(message => message.id !== request.params.id)
-  response.status(204).end()
+  Message.findByIdAndDelete(request.params.id)
+    .then(result => {
+      if (result) {
+        response.status(204).end()
+      } else {
+        response.status(404).json({ error: 'message not found' })
+      }
+    })
+    .catch(error => {
+      console.error(error)
+      response.status(500).json({ error: 'something went wrong while deleting' })
+    })
 })
 
-const PORT = 3001
+
+const PORT = process.env.PORT
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
