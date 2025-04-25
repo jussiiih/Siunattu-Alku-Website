@@ -1,19 +1,28 @@
 import axios from 'axios'
 const baseUrl = 'http://localhost:3001/api/messages'
 
+let token = null
+
+const setToken = newToken => {
+    token = `Bearer ${newToken}`
+}
+
 const getAllMessages = () => {
-  const request = axios.get(baseUrl)
-  return request.then(response => response.data)
+    const config = {
+        headers: { Authorization: token }
+    }
+    const request = axios.get(baseUrl, config)
+    return request.then(response => response.data)
 }
 
 const createMessage = (newMessage) => {
-  const request = axios.post(baseUrl, newMessage)
-  return request.then(response => response.data)
+    const request = axios.post(baseUrl, newMessage)
+    return request.then(response => response.data)
 }
 
 const deleteMessage = (messageToBeRemoved) => {
-  return axios.delete(`${baseUrl}/${messageToBeRemoved.id}`)
+    return axios.delete(`${baseUrl}/${messageToBeRemoved.id}`)
 }
 
-export default { getAllMessages, createMessage, deleteMessage }
+export default { getAllMessages, createMessage, deleteMessage, setToken }
 

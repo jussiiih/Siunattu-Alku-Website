@@ -10,6 +10,7 @@ import Admin from "./components/Admin"
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import { useState, useEffect } from "react"
 import messageService from "./services/messages"
+import loginService from "./services/login"
 
 const App = () => {
 
@@ -18,6 +19,9 @@ const App = () => {
   const [newEmail, setNewEmail] = useState('')
   const [newContent, setNewContent] = useState('')
   const [messages, setMessages] = useState([])
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [admin, setAdmin] = useState(null)
 
   const handleNameChange = (event) => {
     setNewName(event.target.value)
@@ -31,6 +35,22 @@ const App = () => {
   const handleContentChange = (event) => {
     setNewContent(event.target.value)
   }
+
+  const handleLogin = async (event) => {
+    event.preventDefault()
+    try {
+        const user = await loginService.login({
+          username,
+          password,
+        })
+        messageService.setToken(user.token);
+        setAdmin(user)
+        setUsername('')
+        setPassword('')
+    } catch (exception) {
+      console.log('wrong credentials')
+    }
+  };
 
   const sendMessage = (event) => {
     event.preventDefault()
@@ -61,12 +81,17 @@ const App = () => {
   }
 
   useEffect(() => {
-    messageService
-    .getAllMessages()
-    .then(response => {
-      setMessages(response)
-    })
-  }, [])
+    if (admin) {
+      messageService
+        .getAllMessages()
+        .then(response => {
+          setMessages(response)
+        })
+        .catch(error => {
+          console.error('Failed to fetch messages:', error)
+        })
+    }
+  }, [admin])
 
   const padding = {
     padding: 5
@@ -96,7 +121,7 @@ const App = () => {
           newContent={newContent} handleContentChange={handleContentChange}
           sendMessage={sendMessage}/>}/>
         <Route path='/admin' element={<Admin
-          messages={messages} deleteMessage={deleteMessage}/>}/>
+          messages={messages} deleteMessage={deleteMessage} handleLogin={handleLogin} username={username} setUsername={setUsername} password={password} setPassword={setPassword} admin={admin} setAdmin={setAdmin}/>}/>
 
       </Routes>
       
