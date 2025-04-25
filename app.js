@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const config = require('./utils/config')
 const logger = require('./utils/logger')
 const messagesRouter = require('./controllers/messages')
+const loginRouter = require('./controllers/login')
 const middleware = require('./utils/middleware')
 const cors = require('cors')
 
@@ -26,6 +27,7 @@ app.use(express.json())
 app.use(middleware.requestLogger)
 
 app.use('/api/messages', messagesRouter)
+app.use('/api/login', loginRouter)
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)

@@ -1,9 +1,28 @@
 const messagesRouter = require('express').Router()
 const Message = require('../models/message')
 const logger = require('../utils/logger')
+const config = require('../utils/config')
+const jwt = require('jsonwebtoken')
+
+
+const getTokenFrom = request => {
+  const authorization = request.get('authorization')
+  if (authorization && authorization.startsWith('Bearer ')) {
+    return authorization.replace('Bearer ', '')
+  }
+  return null
+}
 
 messagesRouter.get('/', async (request, response) => {
-    try {
+  if (!token) {
+    return response.status(401).json({ error: 'token missing or invalid' })
+  }
+
+  const decodedToken = jwt.verify(getTokenFrom(request), config.SECRET)
+  if (!decodedToken.username) {
+    return response.status(401).json({ error: 'token invalid' })
+  }
+  try {
       const messages = await Message.find({})
       response.json(messages)
     }

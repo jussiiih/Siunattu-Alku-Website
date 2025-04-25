@@ -1,2 +1,4 @@
 node_modules
 .env
+requests/admin_login.rest
+requests/admin_get_all_messages.rest
