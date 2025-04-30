@@ -3,7 +3,7 @@ import messageService from "../services/messages"
 
 const Contact = () => {
 
-    const [newMessageType, setNewMessageType] = useState('yhteydenottopyynto')
+    const [newMessageType, setNewMessageType] = useState('Yhteydenottopyyntö')
     const [newName, setNewName] = useState('')
     const [newPhoneNumber, setNewPhoneNumber] = useState('')
     const [newEmail, setNewEmail] = useState('')
@@ -55,8 +55,8 @@ const Contact = () => {
                     type='radio'
                     id='yhteydenottopyynto'
                     name='messageType'
-                    value='yhteydenottopyynto'
-                    checked={newMessageType === 'yhteydenottopyynto'}
+                    value='Yhteydenottopyyntö'
+                    checked={newMessageType === 'Yhteydenottopyyntö'}
                     onChange={handleMessageTypeChange}
                 />
             <label htmlFor='yhteydenottopyynto'>Yhteydenottopyyntö</label><br />
@@ -65,8 +65,8 @@ const Contact = () => {
                 type='radio'
                 id='palaute'
                 name='messageType'
-                value='palaute'
-                checked={newMessageType === 'palaute'}
+                value='Palaute'
+                checked={newMessageType === 'Palaute'}
                 onChange={handleMessageTypeChange}
             />
             <label htmlFor='palaute'>Palaute</label><br />
@@ -75,8 +75,8 @@ const Contact = () => {
                 type='radio'
                 id='muu'
                 name='messageType'
-                value='muu'
-                checked={newMessageType === 'muu'}
+                value='Muu'
+                checked={newMessageType === 'Muu'}
                 onChange={handleMessageTypeChange}
             />
             <label htmlFor='muu'>Muu</label><br />
