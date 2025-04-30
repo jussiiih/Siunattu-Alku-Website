@@ -1,10 +1,52 @@
-const Contact = ( {newMessageType, handleMessageTypeChange,
-    newName, handleNameChange,
-    newPhoneNumber, handlePhoneNumberChange,
-    newEmail, handleEmailChange,
-    newContent, handleContentChange,
-    sendMessage }) => {
+import { useState } from "react"
+import messageService from "../services/messages"
+
+const Contact = () => {
+
+    const [newMessageType, setNewMessageType] = useState('yhteydenottopyynto')
+    const [newName, setNewName] = useState('')
+    const [newPhoneNumber, setNewPhoneNumber] = useState('')
+    const [newEmail, setNewEmail] = useState('')
+    const [newContent, setNewContent] = useState('')
+    const [messages, setMessages] = useState([])
+
+    const handleMessageTypeChange = (event) => {
+        setNewMessageType(event.target.value)
+    }
+    const handleNameChange = (event) => {
+        setNewName(event.target.value)
+    }
+    const handlePhoneNumberChange = (event) => {
+        setNewPhoneNumber(event.target.value)
+    }
+    const handleEmailChange = (event) => {
+        setNewEmail(event.target.value)
+    }
+    const handleContentChange = (event) => {
+        setNewContent(event.target.value)
+    }
+
+    const sendMessage = (event) => {
+        event.preventDefault()
+        const newMessage = {
+            messageType: newMessageType,
+            name: newName,
+            phoneNumber: newPhoneNumber,
+            email: newEmail,
+            content: newContent
+        }
     
+        messageService
+          .createMessage(newMessage)
+          .then(response => {
+            setMessages(messages.concat(response))
+            setNewName('')
+            setNewEmail('')
+            setNewPhoneNumber('')
+            setNewContent('')
+          })
+    }
+        
     return (
         <div>
             <h2>Ota yhteyttä</h2>

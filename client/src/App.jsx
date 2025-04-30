@@ -14,32 +14,10 @@ import loginService from "./services/login"
 
 const App = () => {
 
-  const [newMessageType, setNewMessageType] = useState('yhteydenottopyynto')
-  const [newName, setNewName] = useState('')
-  const [newPhoneNumber, setNewPhoneNumber] = useState('')
-  const [newEmail, setNewEmail] = useState('')
-  const [newContent, setNewContent] = useState('')
   const [messages, setMessages] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [admin, setAdmin] = useState(null)
-
-  const handleMessageTypeChange = (event) => {
-    setNewMessageType(event.target.value)
-  }
-
-  const handleNameChange = (event) => {
-    setNewName(event.target.value)
-  }
-  const handlePhoneNumberChange = (event) => {
-    setNewPhoneNumber(event.target.value)
-  }
-  const handleEmailChange = (event) => {
-    setNewEmail(event.target.value)
-  }
-  const handleContentChange = (event) => {
-    setNewContent(event.target.value)
-  }
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -57,26 +35,7 @@ const App = () => {
     }
   };
 
-  const sendMessage = (event) => {
-    event.preventDefault()
-    const newMessage = {
-      messageType: newMessageType,
-      name: newName,
-      phoneNumber: newPhoneNumber,
-      email: newEmail,
-      content: newContent
-    }
 
-    messageService
-      .createMessage(newMessage)
-      .then(response => {
-        setMessages(messages.concat(response))
-        setNewName('')
-        setNewEmail('')
-        setNewPhoneNumber('')
-        setNewContent('')
-      })
-  }
 
   const deleteMessage = (messageToBeRemoved) => {
     messageService
@@ -120,13 +79,7 @@ const App = () => {
         <Route path='/hinnasto' element={<Prices/>}/>
         <Route path='/ennimaria' element={<Introduction/>}/>
         <Route path='/mikadoula' element={<Info/>}/>
-        <Route path='/yhteys' element={<Contact
-          newMessageType={newMessageType} handleMessageTypeChange={handleMessageTypeChange}
-          newName={newName} handleNameChange={handleNameChange}
-          newPhoneNumber={newPhoneNumber} handlePhoneNumberChange={handlePhoneNumberChange}
-          newEmail={newEmail} handleEmailChange={handleEmailChange}
-          newContent={newContent} handleContentChange={handleContentChange}
-          sendMessage={sendMessage}/>}/>
+        <Route path='/yhteys' element={<Contact/>}/>
         <Route path='/admin' element={<Admin
           messages={messages} deleteMessage={deleteMessage} handleLogin={handleLogin} username={username} setUsername={setUsername} password={password} setPassword={setPassword} admin={admin} setAdmin={setAdmin}/>}/>
 
