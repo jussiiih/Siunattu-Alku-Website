@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 
 const messageSchema = new mongoose.Schema({
+    messageType: String,
     timestamp: String,
     name: String,
     phoneNumber: String,

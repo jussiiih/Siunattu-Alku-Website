@@ -1,4 +1,5 @@
-const Contact = ( {newName, handleNameChange,
+const Contact = ( {newMessageType, handleMessageTypeChange,
+    newName, handleNameChange,
     newPhoneNumber, handlePhoneNumberChange,
     newEmail, handleEmailChange,
     newContent, handleContentChange,
@@ -8,6 +9,36 @@ const Contact = ( {newName, handleNameChange,
         <div>
             <h2>Ota yhteyttä</h2>
             <form onSubmit={sendMessage}>
+                <input
+                    type='radio'
+                    id='yhteydenottopyynto'
+                    name='messageType'
+                    value='yhteydenottopyynto'
+                    checked={newMessageType === 'yhteydenottopyynto'}
+                    onChange={handleMessageTypeChange}
+                />
+            <label htmlFor='yhteydenottopyynto'>Yhteydenottopyyntö</label><br />
+
+            <input
+                type='radio'
+                id='palaute'
+                name='messageType'
+                value='palaute'
+                checked={newMessageType === 'palaute'}
+                onChange={handleMessageTypeChange}
+            />
+            <label htmlFor='palaute'>Palaute</label><br />
+
+            <input
+                type='radio'
+                id='muu'
+                name='messageType'
+                value='muu'
+                checked={newMessageType === 'muu'}
+                onChange={handleMessageTypeChange}
+            />
+            <label htmlFor='muu'>Muu</label><br />
+
                 Nimi: <input
                     value={newName}
                     onChange={handleNameChange}/><br></br>

@@ -14,6 +14,7 @@ import loginService from "./services/login"
 
 const App = () => {
 
+  const [newMessageType, setNewMessageType] = useState('yhteydenottopyynto')
   const [newName, setNewName] = useState('')
   const [newPhoneNumber, setNewPhoneNumber] = useState('')
   const [newEmail, setNewEmail] = useState('')
@@ -22,6 +23,10 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [admin, setAdmin] = useState(null)
+
+  const handleMessageTypeChange = (event) => {
+    setNewMessageType(event.target.value)
+  }
 
   const handleNameChange = (event) => {
     setNewName(event.target.value)
@@ -55,6 +60,7 @@ const App = () => {
   const sendMessage = (event) => {
     event.preventDefault()
     const newMessage = {
+      messageType: newMessageType,
       name: newName,
       phoneNumber: newPhoneNumber,
       email: newEmail,
@@ -115,6 +121,7 @@ const App = () => {
         <Route path='/ennimaria' element={<Introduction/>}/>
         <Route path='/mikadoula' element={<Info/>}/>
         <Route path='/yhteys' element={<Contact
+          newMessageType={newMessageType} handleMessageTypeChange={handleMessageTypeChange}
           newName={newName} handleNameChange={handleNameChange}
           newPhoneNumber={newPhoneNumber} handlePhoneNumberChange={handlePhoneNumberChange}
           newEmail={newEmail} handleEmailChange={handleEmailChange}

@@ -20,6 +20,7 @@ const Admin = ({ messages, deleteMessage, handleLogin, username, setUsername, pa
             <div key={message.id}>
             <p>
                 {message.timestamp}<br/>
+                Aihe: {message.messageType}<br/>
                 Nimi: {message.name}<br/>
                 Viesti: {message.content}<br/>
                 Puhelin: {message.phoneNumber}<br/>
