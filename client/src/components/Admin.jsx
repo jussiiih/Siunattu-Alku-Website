@@ -1,4 +1,52 @@
-const Admin = ({ messages, deleteMessage, handleLogin, username, setUsername, password, setPassword, admin, setAdmin }) => {
+import messageService from "../services/messages"
+import loginService from "../services/login"
+import { useState, useEffect } from "react"
+
+const Admin = () => { 
+    const [messages, setMessages] = useState([])
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+    const [admin, setAdmin] = useState(null)
+  
+    const handleLogin = async (event) => {
+      event.preventDefault()
+      try {
+          const user = await loginService.login({
+            username,
+            password,
+          })
+          messageService.setToken(user.token);
+          setAdmin(user)
+          setUsername('')
+          setPassword('')
+      } catch (exception) {
+        console.log('wrong credentials')
+      }
+    };
+  
+  
+  
+    const deleteMessage = (messageToBeRemoved) => {
+      messageService
+        .deleteMessage(messageToBeRemoved)
+        .then(() => {
+          setMessages(messages.filter(message => message.id !== messageToBeRemoved.id))
+        })
+    }
+  
+    useEffect(() => {
+      if (admin) {
+        messageService
+          .getAllMessages()
+          .then(response => {
+            setMessages(response)
+          })
+          .catch(error => {
+            console.error('Failed to fetch messages:', error)
+          })
+      }
+    }, [admin])
+    
     const loginForm = () => {
         return (
         <form onSubmit={handleLogin}>

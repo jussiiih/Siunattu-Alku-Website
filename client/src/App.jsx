@@ -8,55 +8,8 @@ import HomePage from "./components/HomePage"
 import Admin from "./components/Admin"
 
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-import { useState, useEffect } from "react"
-import messageService from "./services/messages"
-import loginService from "./services/login"
 
 const App = () => {
-
-  const [messages, setMessages] = useState([])
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [admin, setAdmin] = useState(null)
-
-  const handleLogin = async (event) => {
-    event.preventDefault()
-    try {
-        const user = await loginService.login({
-          username,
-          password,
-        })
-        messageService.setToken(user.token);
-        setAdmin(user)
-        setUsername('')
-        setPassword('')
-    } catch (exception) {
-      console.log('wrong credentials')
-    }
-  };
-
-
-
-  const deleteMessage = (messageToBeRemoved) => {
-    messageService
-      .deleteMessage(messageToBeRemoved)
-      .then(() => {
-        setMessages(messages.filter(message => message.id !== messageToBeRemoved.id))
-      })
-  }
-
-  useEffect(() => {
-    if (admin) {
-      messageService
-        .getAllMessages()
-        .then(response => {
-          setMessages(response)
-        })
-        .catch(error => {
-          console.error('Failed to fetch messages:', error)
-        })
-    }
-  }, [admin])
 
   const padding = {
     padding: 5
@@ -80,9 +33,7 @@ const App = () => {
         <Route path='/ennimaria' element={<Introduction/>}/>
         <Route path='/mikadoula' element={<Info/>}/>
         <Route path='/yhteys' element={<Contact/>}/>
-        <Route path='/admin' element={<Admin
-          messages={messages} deleteMessage={deleteMessage} handleLogin={handleLogin} username={username} setUsername={setUsername} password={password} setPassword={setPassword} admin={admin} setAdmin={setAdmin}/>}/>
-
+        <Route path='/admin' element={<Admin/>}/>
       </Routes>
       
       <Footer/>
