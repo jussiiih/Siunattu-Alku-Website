@@ -11,5 +11,6 @@ const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD
 
 const SECRET = process.env.SECRET
 
+const CRYPT_KEY = process.env.CRYPT_KEY
 
-module.exports = { MONGODB_URI, PORT, ADMIN_USERNAME, ADMIN_PASSWORD, SECRET }
+module.exports = { MONGODB_URI, PORT, ADMIN_USERNAME, ADMIN_PASSWORD, SECRET, CRYPT_KEY }

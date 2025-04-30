@@ -8,3 +8,5 @@
 | 22.4. | 2    | Message service backend and showing messages in frontend |
 | 23.4. | 3    | Message GET, POST, DELETE, MongoDB connections, backend testing, admin login |
 | 24.4. | 2    | MongoDB connections, backend testing, admin login |
+| 24.5. | 2    | admin view, application refactoring |
+| 28.4. | 1    | message crypting |
