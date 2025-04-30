@@ -39,6 +39,7 @@ const Contact = () => {
         messageService
           .createMessage(newMessage)
           .then(response => {
+            setNewMessageType('Yhteydenottopyyntö')
             setMessages(messages.concat(response))
             setNewName('')
             setNewEmail('')
