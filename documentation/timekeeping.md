@@ -10,4 +10,4 @@
 | 24.4. | 2    | MongoDB connections, backend testing, admin login |
 | 24.5. | 2    | admin view, application refactoring |
 | 28.4. | 1    | message crypting |
-| 28.4. | 2    | frontend refactoring, message form updates |
+| 30.4. | 2    | frontend refactoring, message form updates, frontend produdction build |

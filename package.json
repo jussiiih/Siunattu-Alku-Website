@@ -8,7 +8,10 @@
     "dev": "cross-env NODE_ENV=development nodemon index.js",
     "lint": "eslint .",
     "test": "cross-env NODE_ENV=test node --test ",
-    "server": "json-server -p 3001 db.json"
+    "server": "json-server -p 3001 db.json",
+    "build:ui": "rimraf dist && cd client && npm run build && xcopy /E /I /Y dist ..\\dist"
+
+
   },
   "repository": {
     "type": "git",
@@ -27,6 +30,7 @@
     "@stylistic/eslint-plugin-js": "^2.12.1",
     "eslint": "^9.17.0",
     "nodemon": "^3.1.9",
+    "rimraf": "^6.0.1",
     "supertest": "^7.1.0"
   },
   "dependencies": {

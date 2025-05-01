@@ -6,6 +6,7 @@ const messagesRouter = require('./controllers/messages')
 const loginRouter = require('./controllers/login')
 const middleware = require('./utils/middleware')
 const cors = require('cors')
+const path = require('path')
 
 
 const app = express()
@@ -21,13 +22,20 @@ mongoose
         logger.error('error connecting to MongoDB: ', error.message)
     })
 
-//app.use(express.static('dist'))
+app.use(express.static('dist'))
+
+// POISTA CORS
 app.use(cors())
 app.use(express.json())
 app.use(middleware.requestLogger)
 
 app.use('/api/messages', messagesRouter)
 app.use('/api/login', loginRouter)
+
+app.get('*', (req, res) => {
+    console.log('Fallback route hit:', req.path)
+    res.sendFile(path.resolve(__dirname, 'dist', 'index.html'))
+})
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)

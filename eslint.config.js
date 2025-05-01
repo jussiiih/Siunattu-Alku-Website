@@ -4,6 +4,9 @@ const stylisticJs = require('@stylistic/eslint-plugin-js')
 
 /** @type {import('eslint').Linter.Config[]} */
 module.exports = [
+    {
+        ignores: ['./client/dist/**']
+    },
     js.configs.recommended,
     {
         plugins: {
@@ -27,6 +30,6 @@ module.exports = [
                 ...globals.node,
             },
             ecmaVersion: 'latest',
-        },
-    },
+        }
+    }
 ]
