@@ -69,6 +69,7 @@ const Admin = () => {
             <p>
                 {message.timestamp}<br/>
                 Aihe: {message.messageType}<br/>
+                {message.messageType === "Palaute" && <p>Palautteen saa julkaista: {message.feedbackPublic}</p>}
                 Nimi: {message.name}<br/>
                 Viesti: {message.content}<br/>
                 Puhelin: {message.phoneNumber}<br/>

@@ -83,6 +83,7 @@ messagesRouter.post('/', async (request, response) => {
         phoneNumber: body.phoneNumber,
         email: body.email,
         content: body.content,
+        feedbackPublic: body.feedbackPublic,
         timestamp: new Date().toLocaleString('fi-FI', { timeZone: 'Europe/Helsinki' })
     })
 
