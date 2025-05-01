@@ -10,8 +10,6 @@
     "test": "cross-env NODE_ENV=test node --test ",
     "server": "json-server -p 3001 db.json",
     "build:ui": "rimraf dist && cd client && npm run build && xcopy /E /I /Y dist ..\\dist"
-
-
   },
   "repository": {
     "type": "git",
@@ -34,7 +32,6 @@
     "supertest": "^7.1.0"
   },
   "dependencies": {
-    "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "dotenv": "^16.5.0",
     "express": "^4.21.2",

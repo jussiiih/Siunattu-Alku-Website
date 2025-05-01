@@ -5,7 +5,6 @@ const logger = require('./utils/logger')
 const messagesRouter = require('./controllers/messages')
 const loginRouter = require('./controllers/login')
 const middleware = require('./utils/middleware')
-const cors = require('cors')
 const path = require('path')
 
 
@@ -23,9 +22,6 @@ mongoose
     })
 
 app.use(express.static('dist'))
-
-// POISTA CORS
-app.use(cors())
 app.use(express.json())
 app.use(middleware.requestLogger)
 
