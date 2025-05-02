@@ -24,7 +24,7 @@ const LoginForm = ({ setAdmin }) => {
    
 
     return (
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleLogin} name="ContactForm">
         <div>
             Käyttäjätunnus:
             <input type="text" value={username} name="Username" onChange={({ target }) => setUsername(target.value)}></input>

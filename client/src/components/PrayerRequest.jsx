@@ -45,7 +45,7 @@ const PrayerRequest = () => {
     return (
         <div>
             <h2>Voit jättää tähän rukouspyyntösi</h2>
-            <form onSubmit={sendPrayer}>
+            <form onSubmit={sendPrayer} name="PrayerRequestForm">
                 Rukouspyyntö: <br></br>
                 <textarea
                     value={newContent}

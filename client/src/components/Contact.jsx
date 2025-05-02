@@ -184,11 +184,12 @@ const Contact = () => {
                     
 
                 }
+                <ErrorMessage text={errorMessage}/>
+                <ScreenMessage text={screenMessage} />
                 <button type='submit'>Lähetä</button>
 
             </form>
-            <ErrorMessage text={errorMessage}/>
-            <ScreenMessage text={screenMessage} />
+
         </div>
 
     )

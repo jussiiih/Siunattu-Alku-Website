@@ -1,0 +1,75 @@
+body {
+    width: 100%;
+    box-sizing: border-box;
+    font-family: Helvetica, "Trebuchet MS", Verdana, sans-serif;
+    line-height: 1.6;
+    font-size: 16px;
+    background-color: lightgrey;
+    color: #000;
+}
+
+p, h1, h2 {
+
+
+  }
+
+  h1 {
+    margin: 0px, 10px, 10px, 10px;
+    font-family: "Birthstone", cursive;
+    font-weight: 400;
+    font-size: 60px;
+    margin: 0;
+  }
+
+a {
+    font-weight: bold;
+}
+
+a:hover:not(footer a) {
+    background-color: white;
+}
+
+form {
+    background-color: white;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: black;
+    padding: 10px;
+    color: rgb(112, 110, 110);
+    margin: 10px;
+}
+
+.errorMessage {
+    color: black;
+    background: rgb(238, 155, 155);
+    font-size: 20px;
+    border-style: solid;
+    border-radius: 5px;
+    border-color: red;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+.screenMessage {
+    color: black;
+    background: rgb(162, 223, 162);
+    font-size: 20px;
+    border-style: solid;
+    border-radius: 5px;
+    border-color: green;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+footer {
+    background-color: rgb(22, 37, 22);
+    margin-top: 10px;
+    color: lightgray;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+footer img {
+padding: 10px;
+}
+

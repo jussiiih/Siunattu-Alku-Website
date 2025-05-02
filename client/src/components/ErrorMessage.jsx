@@ -1,6 +1,8 @@
 const ErrorMessage = ( {text} ) => {
+    if (!text) return null
+    
     return (
-        <p>{text}</p>
+        <p className="errorMessage">{text}</p>
     )
 }
 

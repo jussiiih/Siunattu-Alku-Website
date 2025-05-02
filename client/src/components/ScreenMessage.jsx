@@ -1,6 +1,8 @@
 const ScreenMessage = ( {text} ) => {
+    if (!text) return null
+    
     return (
-        <p>{text}</p>
+        <p className="screenMessage">{text}</p>
     )
 }
 
