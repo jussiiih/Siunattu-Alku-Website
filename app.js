@@ -4,6 +4,7 @@ const config = require('./utils/config')
 const logger = require('./utils/logger')
 const messagesRouter = require('./controllers/messages')
 const loginRouter = require('./controllers/login')
+const prayersRouter = require('./controllers/prayers')
 const middleware = require('./utils/middleware')
 const path = require('path')
 
@@ -27,6 +28,7 @@ app.use(middleware.requestLogger)
 
 app.use('/api/messages', messagesRouter)
 app.use('/api/login', loginRouter)
+app.use('/api/prayers', prayersRouter)
 
 app.get('*', (req, res) => {
     console.log('Fallback route hit:', req.path)

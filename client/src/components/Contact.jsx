@@ -1,5 +1,7 @@
 import { useState } from "react"
 import messageService from "../services/messages"
+import ErrorMessage from "./ErrorMessage"
+import ScreenMessage from "./ScreenMessage"
 
 const Contact = () => {
 
@@ -9,8 +11,10 @@ const Contact = () => {
     const [newEmail, setNewEmail] = useState('')
     const [newContent, setNewContent] = useState('')
     const [feedbackPublic, setFeedbackPublic] = useState(null)
-
     const [messages, setMessages] = useState([])
+    
+    const [screenMessage, setScreenMessage] = useState(null)
+    const [errorMessage, setErrorMessage] = useState(null)
 
 
     const handleMessageTypeChange = (event) => {
@@ -34,6 +38,13 @@ const Contact = () => {
 
     const sendMessage = (event) => {
         event.preventDefault()
+
+        if (newMessageType !== "Palaute" && newEmail === "" && newPhoneNumber === "") {
+            const confirmSend = window.confirm(
+                'Et ole jättänyt puhelinnumeroasi tai sähköpostiosoitettasi.\n\nHuomaathan, että en pysty ottaamaan sinuun yhteyttä.\n\nLähetetäänkö viesti silti?'
+            )
+            if (!confirmSend) return
+        }
         const newMessage = {
             messageType: newMessageType,
             name: newName,
@@ -53,23 +64,27 @@ const Contact = () => {
             setNewPhoneNumber('')
             setNewContent('')
             setFeedbackPublic(null)
+            setErrorMessage(null)
+            setScreenMessage('Viestin lähettäminen onnistui')
+            setTimeout(() => {
+                setScreenMessage(null)
+            }, 10000)
           })
+          .catch(error => {
+            setScreenMessage(null)
+            setErrorMessage('Viestin lähettäminen epäonnistui')
+            setTimeout(() => {
+                setErrorMessage(null)
+            }, 10000)
+        })
+ 
     }
     
     
     return (
         <div>
             <h2>Ota yhteyttä</h2>
-            <form onSubmit={(event) => {
-                event.preventDefault()
-                if (newMessageType !== "Palaute" && newEmail === "" && newPhoneNumber === "") {
-                    const confirm = window.confirm('Et ole jättänyt puhelinnumeroasi tai sähköpostiosoitettasi.\n\nHuomaathan, että en pysty ottaamaan sinuun yhteyttä.\n\nLähetetäänkö viesti silti?');
-                    
-                    if (confirm) {
-                        sendMessage()
-                    }
-                }
-            }}>
+            <form onSubmit={sendMessage}>
                 <input
                     type='radio'
                     id='yhteydenottopyynto'
@@ -130,9 +145,14 @@ const Contact = () => {
                     onChange={handleEmailChange}/><br></br>
                 </>
                 }
-                Viesti: <input
+                Viesti:<br></br>
+                <textarea
                     value={newContent}
-                    onChange={handleContentChange}/><br></br>
+                    onChange={handleContentChange}
+                    rows={12}
+                    cols={40}    
+                />
+                    <br></br>
 
 
                 {newMessageType === "Palaute" &&
@@ -167,6 +187,8 @@ const Contact = () => {
                 <button type='submit'>Lähetä</button>
 
             </form>
+            <ErrorMessage text={errorMessage}/>
+            <ScreenMessage text={screenMessage} />
         </div>
 
     )

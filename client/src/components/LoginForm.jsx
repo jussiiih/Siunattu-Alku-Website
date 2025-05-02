@@ -1,5 +1,6 @@
 import messageService from "../services/messages"
 import loginService from "../services/login"
+import prayerService from "../services/prayers"
 import { useState } from "react"
 
 const LoginForm = ({ setAdmin }) => { 
@@ -14,6 +15,7 @@ const LoginForm = ({ setAdmin }) => {
       })
       messageService.setToken(user.token)
       loginService.setToken(user.token)
+      prayerService.setToken(user.token)
       setAdmin(user)
       setUsername('')
       setPassword('')

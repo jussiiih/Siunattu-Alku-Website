@@ -68,15 +68,6 @@ messagesRouter.get('/', async (request, response) => {
 messagesRouter.post('/', async (request, response) => {
     const body = request.body
 
-    if (!body.content) {
-        return response.status(400).json({ error: 'content missing' })
-    }
-
-    if (!body.phoneNumber && !body.email) {
-        return response.status(400).json({ error: 'phonenumber or email needed' })
-    }
-
-
     const message = new Message({
         messageType: body.messageType,
         name: body.name,

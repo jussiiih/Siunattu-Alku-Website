@@ -6,6 +6,7 @@ import Contact from "./components/Contact"
 import Footer from "./components/Footer"
 import HomePage from "./components/HomePage"
 import Admin from "./components/Admin"
+import PrayerRequest from "./components/PrayerRequest"
 
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 
@@ -25,17 +26,20 @@ const App = () => {
         <Link style ={padding} to='/ennimaria'>Enni-Maria</Link>
         <Link style ={padding} to='/mikadoula'>Mikä doula?</Link>
         <Link style ={padding} to='/yhteys'>Ota yhteyttä</Link>
+        <Link style ={padding} to='/rukous'>Rukous</Link>
       </div>
 
       <Routes>
         <Route path='/' element={<HomePage/>}/>
+        <Route path='/etusivu' element={<HomePage/>}/>
         <Route path='/hinnasto' element={<Prices/>}/>
         <Route path='/ennimaria' element={<Introduction/>}/>
         <Route path='/mikadoula' element={<Info/>}/>
         <Route path='/yhteys' element={<Contact/>}/>
         <Route path='/admin/*' element={<Admin/>}/>
+        <Route path='/rukous' element={<PrayerRequest/>}/>
       </Routes>
-      
+          
       <Footer/>
     
     </Router>
