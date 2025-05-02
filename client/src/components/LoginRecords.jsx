@@ -38,7 +38,7 @@ const LoginRecords = ({ admin }) => {
           Sijainti: {LoginRecord.location}<br/>
       </p>
       <button onClick={() => deleteLoginRecord(LoginRecord)}>
-          Poista viesti
+          Poista kirjautumistieto
       </button>
       </div>
       )

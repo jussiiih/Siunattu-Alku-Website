@@ -60,7 +60,16 @@ const Contact = () => {
     return (
         <div>
             <h2>Ota yhteyttä</h2>
-            <form onSubmit={sendMessage}>
+            <form onSubmit={(event) => {
+                event.preventDefault()
+                if (newMessageType !== "Palaute" && newEmail === "" && newPhoneNumber === "") {
+                    const confirm = window.confirm('Et ole jättänyt puhelinnumeroasi tai sähköpostiosoitettasi.\n\nHuomaathan, että en pysty ottaamaan sinuun yhteyttä.\n\nLähetetäänkö viesti silti?');
+                    
+                    if (confirm) {
+                        sendMessage()
+                    }
+                }
+            }}>
                 <input
                     type='radio'
                     id='yhteydenottopyynto'
@@ -103,17 +112,24 @@ const Contact = () => {
 
                 <label htmlFor='muu'>Muu</label><br />
 
-                Nimi: <input
+                Nimi/Nimimerkki: <input
                     value={newName}
                     onChange={handleNameChange}/><br></br>
+                
+                {newMessageType !== "Palaute" &&
+                <>
                 Puhelinnumero: <input
                     value={newPhoneNumber}
                     type='tel'
                     onChange={handlePhoneNumberChange}/><br></br>
+                
+                
                 Sähköposti: <input
                     value={newEmail}
                     type='email'
                     onChange={handleEmailChange}/><br></br>
+                </>
+                }
                 Viesti: <input
                     value={newContent}
                     onChange={handleContentChange}/><br></br>
