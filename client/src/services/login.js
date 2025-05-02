@@ -6,4 +6,25 @@ const login = async credentials => {
     return response.data
 }
 
-export default { login }
+let token = null
+
+const setToken = newToken => {
+    token = `Bearer ${newToken}`
+}
+
+const getLoginRecords = () => {
+    const config = {
+        headers: { Authorization: token }
+    }
+    const request = axios.get(baseUrl, config)
+    return request.then(response => response.data)
+}
+
+const deleteLoginRecord = (RecordToBeRemoved) => {
+    const config = {
+        headers: { Authorization: token }
+    }
+    return axios.delete(`${baseUrl}/${RecordToBeRemoved.id}`, config)
+}
+
+export default { login, getLoginRecords, deleteLoginRecord, setToken }

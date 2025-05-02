@@ -33,7 +33,7 @@ const Messages = ({ admin }) => {
       <p>
           {message.timestamp}<br/>
           Aihe: {message.messageType}<br/>
-          {message.messageType === "Palaute" && <span>Palautteen saa julkaista: {message.feedbackPublic}</span>}
+          {message.messageType === "Palaute" && <span>Palautteen saa julkaista: {message.feedbackPublic}</span>}<br/>
           Nimi: {message.name}<br/>
           Viesti: {message.content}<br/>
           Puhelin: {message.phoneNumber}<br/>

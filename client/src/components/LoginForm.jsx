@@ -13,6 +13,7 @@ const LoginForm = ({ setAdmin }) => {
         password,
       })
       messageService.setToken(user.token)
+      loginService.setToken(user.token)
       setAdmin(user)
       setUsername('')
       setPassword('')

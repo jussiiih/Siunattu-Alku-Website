@@ -70,7 +70,7 @@ loginRouter.post('/', async (request, response) => {
 
     const loginRecord = new LoginRecord({
         username,
-        timestamp: new Date(),
+        timestamp: new Date().toLocaleString('fi-FI', { timeZone: 'Europe/Helsinki' }),
         ip,
         userAgent: request.headers['user-agent'],
         location
@@ -110,6 +110,24 @@ loginRouter.get('/', async (request, response) => {
     catch (error) {
         logger.error('Error fetching login records:', error)
         response.status(500).json({ error: 'failed to fetch login records' })
+    }
+})
+
+loginRouter.delete('/:id', async (request, response) => {
+    const id = request.params.id
+
+    try {
+        const result = await LoginRecord.findByIdAndDelete(id)
+
+        if (result) {
+            response.status(204).end()
+        } else {
+            response.status(404).json({ error: 'login record not found' })
+        }
+    }
+    catch (error) {
+        logger.error('Error deleting login record:', error)
+        response.status(500).json({ error: 'something went wrong while deleting' })
     }
 })
 
