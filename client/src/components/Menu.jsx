@@ -18,16 +18,14 @@ const Menu = () => {
         />
       </button>
 
-      {menuVisible && (
-        <nav className="menu-dropdown">
-          <Link className='menu-link' to='/'>Etusivu</Link>
-          <Link className='menu-link' to='/hinnasto'>Hinnasto</Link>
-          <Link className='menu-link' to='/ennimaria'>Enni-Maria</Link>
-          <Link className='menu-link' to='/mikadoula'>Mikä doula?</Link>
-          <Link className='menu-link' to='/yhteys'>Ota yhteyttä</Link>
-          <Link className='menu-link' to='/rukous'>Rukous</Link>
-        </nav>
-      )}
+      <nav className={`menu-dropdown ${menuVisible ? 'open' : ''}`}>
+        <Link className='menu-link' to='/'>Etusivu</Link>
+        <Link className='menu-link' to='/hinnasto'>Hinnasto</Link>
+        <Link className='menu-link' to='/ennimaria'>Enni-Maria</Link>
+        <Link className='menu-link' to='/mikadoula'>Mikä doula?</Link>
+        <Link className='menu-link' to='/yhteys'>Ota yhteyttä</Link>
+        <Link className='menu-link' to='/rukous'>Rukous</Link>
+      </nav>
     </div>
   )
 }

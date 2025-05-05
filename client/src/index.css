@@ -1,140 +1,228 @@
 body {
-    margin: 0;
-    width: 100%;
-    box-sizing: border-box;
-    font-family: Helvetica, "Trebuchet MS", Verdana, sans-serif;
-    line-height: 1.6;
-    font-size: 16px;
-    background-color: rgb(221, 207, 224);
-    color: #000;
+  margin: 0;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: Helvetica, "Trebuchet MS", Verdana, sans-serif;
+  line-height: 1.6;
+  font-size: 16px; /* Base font size */
+  background-color: rgb(221, 207, 224);
+  color: #000;
 }
-
 
 h1 {
-  font-family: "Birthstone", cursive;
-  font-weight: 400;
-  font-size: 6s0px;
-  margin: 0;
+font-family: "Birthstone", cursive;
+font-weight: 400;
+font-size: 3.75rem; /* 60px converted to rem */
+margin: 0;
+padding: 0;
+line-height: 1; /* Adjust line-height for mobile-friendly spacing */
 }
 
+p, h2 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+}
 
 .title-container {
-  flex-grow: 1; /* Allows title to take up remaining space */
-  text-align: left; /* Align the title to the left */
-  font-family: "Birthstone", cursive; /* Optional: set specific font for the title */
-  font-size: 2rem; /* Optional: set font size for the title */
+flex-grow: 1; /* Allows title to take up remaining space */
+text-align: left;
+font-family: "Birthstone", cursive;
+font-size: 2rem; /* Relative font size for title */
 }
 
 .menu-container {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  height: 100%;
-  z-index: 1000;
-  position: relative;
-  padding-right: 2rem; /* Add some space from the right edge */
-  box-sizing: border-box;
+display: flex;
+align-items: center;
+justify-content: flex-end;
+height: 100%;
+z-index: 1000;
+position: relative;
+padding-right: 2rem;
+box-sizing: border-box;
 }
 
 .menu-dropdown {
-  position: absolute;
-  top: 50px;            /* Below the menu button */
-  right: 50;             /* Align with right edge of button */
-  background-color: white;
-  padding: 10px;
-  border: 1px solid black;
-  border-radius: 5px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  z-index: 999;
-  width: 150px;
-  box-sizing: border-box;
+position: absolute;
+top: 3rem; /* Using rem instead of px */
+right: 2rem; /* Using rem instead of px */
+background-color: rgb(167, 16, 167);
+padding: 1rem;
+box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+z-index: 999;
+width: 20rem; /* 350px converted to rem */
+box-sizing: border-box;
+text-align: center;
+font-size: 1.75rem; /* Font size in rem */
+pointer-events: none;
+opacity: 0;
+visibility: hidden;
+transition: opacity 0.3s linear, visibility 0.3s linear;
+}
+
+.menu-dropdown.open {
+opacity: 1;
+visibility: visible;
+pointer-events: auto;
 }
 
 .header-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background-color: white;
-  z-index: 1000;
-  padding: 1rem;
+display: flex;
+align-items: center;
+justify-content: space-between;
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+background-color: white;
+z-index: 1000;
+padding: 1rem;
 }
 
 .menu-toggle {
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
+background: none;
+border: none;
+padding: 0;
+cursor: pointer;
 }
 
-
 .menu-button {
-  width: 30px;
-  height: 30px;
-  display: block;
+width: 1.875rem; /* 30px converted to rem */
+height: 1.875rem; /* 30px converted to rem */
+display: block;
 }
 
 .menu-link {
-  display: block;
-  margin: 5px 0;
+display: block;
+margin: 0.3125rem 0; /* 5px converted to rem */
+text-decoration: none;
+color: white;
 }
-  
+
 main {
-  margin-top: 150px;
+margin-top: 4.6875rem; /* 75px converted to rem */
 }
 
 a {
-  font-weight: bold;
+font-weight: bold;
 }
 
 a:hover:not(footer a) {
-  background-color: white;
+background-color: white;
 }
 
 form {
-  background-color: white;
-  border-radius: 5px;
-  border-style: solid;
-  border-color: black;
-  padding: 10px;
-  color: rgb(112, 110, 110);
-  margin: 10px;
+background-color: white;
+border-radius: 5px;
+border-style: solid;
+border-color: black;
+padding: 1rem;
+color: rgb(112, 110, 110);
+margin: 0.625rem;
 }
 
 .errorMessage {
-    color: black;
-    background: rgb(238, 155, 155);
-    font-size: 20px;
-    border-style: solid;
-    border-radius: 5px;
-    border-color: red;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
+  color: black;
+  background: rgb(238, 155, 155);
+  font-size: 1.25rem; /* 20px converted to rem */
+  border-style: solid;
+  border-radius: 5px;
+  border-color: red;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
 
 .screenMessage {
-    color: black;
-    background: rgb(162, 223, 162);
-    font-size: 20px;
-    border-style: solid;
-    border-radius: 5px;
-    border-color: green;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
+  color: black;
+  background: rgb(162, 223, 162);
+  font-size: 1.25rem; /* 20px converted to rem */
+  border-style: solid;
+  border-radius: 5px;
+  border-color: green;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
 
 footer {
-    background-color: rgb(22, 37, 22);
-    margin-top: 10px;
-    color: lightgray;
-    padding-top: 10px;
-    padding-left: 10px;
+  background-color: rgb(22, 37, 22);
+  margin-top: 1rem;
+  color: lightgray;
+  padding-top: 1rem;
+  padding-left: 1rem;
 }
 
 footer img {
-padding: 10px;
+padding: 1rem;
 }
 
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+.menu-dropdown {
+  width: 250px; /* Set a fixed width for the dropdown to ensure it doesn't get too narrow */
+  top: 3rem;     /* Keeps it below the menu button */
+  width: 550%;      /* Aligns the dropdown with the right side of the menu button */
+}
+}
+
+.header-container {
+  padding: 1rem; /* Adjusts padding */
+}
+
+.menu-button {
+  width: 2rem; /* Adjusts the button size for smaller screens */
+  height: 2rem;
+}
+
+h1 {
+  font-size: 3rem; /* Reduces font size for mobile */
+}
+
+.title-container {
+  font-size: 1.5rem; /* Adjusts the title font for mobile */
+}
+
+.menu-link {
+  font-size: 1.5rem; /* Adjusts menu link font for mobile */
+}
+
+form {
+  margin: 0.625rem; /* Adds some space between form elements */
+}
+
+main {
+  margin-top: 5rem; /* Adjusts margin for mobile screens */
+}
+
+/* Laptop/Desktop-specific styles (min-width: 769px) */
+@media (min-width: 769px) {
+.menu-dropdown {
+  width: 25rem; /* Adjusts width for larger screens */
+  top: 4rem; /* Keeps the dropdown a bit lower on larger screens */
+  right: 2rem; /* Aligns the menu better */
+}
+
+h1 {
+  font-size: 4.5rem; /* Increases font size for larger screens */
+}
+
+.title-container {
+  font-size: 2.5rem; /* Adjusts title font for laptop screens */
+}
+
+.menu-link {
+  font-size: 1.75rem; /* Adjusts menu link font for laptop */
+}
+
+.menu-button {
+  width: 2.5rem; /* Makes the button larger for laptops */
+  height: 2.5rem;
+}
+
+form {
+  margin: 1rem; /* Adds space around the form */
+}
+
+main {
+  margin-top: 6rem; /* Adds some spacing on top */
+}
+}
