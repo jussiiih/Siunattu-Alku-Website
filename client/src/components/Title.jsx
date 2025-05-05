@@ -1,8 +1,7 @@
 const Title = () => {
     return (
-        <div>
+        <div className="title-container">
             <h1>Siunattu alku</h1>
-            <p>Doulapalvelut</p>
         </div>
     )
 }

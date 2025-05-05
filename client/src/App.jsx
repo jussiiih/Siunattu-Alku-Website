@@ -1,47 +1,41 @@
 import Title from "./components/Title"
+import Footer from "./components/Footer"
+import Menu from "./components/Menu"
+
 import Prices from "./components/Prices"
 import Introduction from "./components/Introduction"
 import Info from "./components/Info"
 import Contact from "./components/Contact"
-import Footer from "./components/Footer"
 import HomePage from "./components/HomePage"
 import Admin from "./components/Admin"
 import PrayerRequest from "./components/PrayerRequest"
 
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 const App = () => {
-
-  const padding = {
-    padding: 5
-  }
-
   return (
     <Router>
-      <Title/>
-      
-      <div>
-        <Link style ={padding} to='/'>Etusivu</Link>
-        <Link style ={padding} to='/hinnasto'>Hinnasto</Link>
-        <Link style ={padding} to='/ennimaria'>Enni-Maria</Link>
-        <Link style ={padding} to='/mikadoula'>Mikä doula?</Link>
-        <Link style ={padding} to='/yhteys'>Ota yhteyttä</Link>
-        <Link style ={padding} to='/rukous'>Rukous</Link>
+    <header className="header-container">
+      <div className="title-container">
+        <Title />
       </div>
+      <Menu />
+    </header>
 
-      <Routes>
-        <Route path='/' element={<HomePage/>}/>
-        <Route path='/etusivu' element={<HomePage/>}/>
-        <Route path='/hinnasto' element={<Prices/>}/>
-        <Route path='/ennimaria' element={<Introduction/>}/>
-        <Route path='/mikadoula' element={<Info/>}/>
-        <Route path='/yhteys' element={<Contact/>}/>
-        <Route path='/admin/*' element={<Admin/>}/>
-        <Route path='/rukous' element={<PrayerRequest/>}/>
-      </Routes>
-          
-      <Footer/>
-    
+      <main>
+        <Routes>
+          <Route path='/' element={<HomePage />} />
+          <Route path='/etusivu' element={<HomePage />} />
+          <Route path='/hinnasto' element={<Prices />} />
+          <Route path='/ennimaria' element={<Introduction />} />
+          <Route path='/mikadoula' element={<Info />} />
+          <Route path='/yhteys' element={<Contact />} />
+          <Route path='/admin/*' element={<Admin />} />
+          <Route path='/rukous' element={<PrayerRequest />} />
+        </Routes>
+      </main>
+
+      <Footer />
     </Router>
   )
 }
