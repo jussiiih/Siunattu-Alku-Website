@@ -28,9 +28,11 @@ const Messages = ({ admin }) => {
 
 
   return (
-  messages.map(message =>
-      <div key={message.id}>
-      <p>
+  <table>
+    {messages.map(message =>
+            <>
+      <tr>
+        <td>
           {message.timestamp}<br/>
           Aihe: {message.messageType}<br/>
           {message.messageType === "Palaute" && <span>Palautteen saa julkaista: {message.feedbackPublic}</span>}<br/>
@@ -38,12 +40,18 @@ const Messages = ({ admin }) => {
           Viesti: {message.content}<br/>
           Puhelin: {message.phoneNumber}<br/>
           Sähköposti: {message.email}<br/>
-      </p>
-      <button onClick={() => deleteMessage(message)}>
-          Poista viesti
-      </button>
-      </div>
-      )
+      </td>
+      <td>
+        <button onClick={() => deleteMessage(message)}>
+            Poista viesti
+        </button>
+      </td>
+      </tr>
+      <br></br>
+</>
+    )
+    }
+      </table>
   )
     
 }

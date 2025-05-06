@@ -13,3 +13,4 @@
 | 30.4. | 2    | frontend refactoring, message form updates, frontend produdction build |
 | 1.5. | 1    | frontend produdction build fix, proxy, message form updates |
 | 2.5. | 8    | css draft, prayer requests, screen messages |
+| 5.5. | 6    | css enhancing, menu to hamburger model, refactoring frontend |

@@ -7,6 +7,7 @@ const loginRouter = require('./controllers/login')
 const prayersRouter = require('./controllers/prayers')
 const middleware = require('./utils/middleware')
 const path = require('path')
+const helmet = require('helmet')
 
 
 const app = express()
@@ -25,6 +26,9 @@ mongoose
 app.use(express.static('dist'))
 app.use(express.json())
 app.use(middleware.requestLogger)
+
+app.use(helmet())
+app.disable('x-powered-by')
 
 app.use('/api/messages', messagesRouter)
 app.use('/api/login', loginRouter)

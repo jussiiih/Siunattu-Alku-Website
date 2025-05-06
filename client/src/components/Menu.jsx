@@ -8,6 +8,10 @@ const Menu = () => {
     setMenuVisible(!menuVisible)
   }
 
+  const handleLinkClick = () => {
+    setMenuVisible(false)
+  }
+
   return (
     <div className="menu-container">
       <button onClick={toggleMenuVisibility} className="menu-toggle">
@@ -19,12 +23,12 @@ const Menu = () => {
       </button>
 
       <nav className={`menu-dropdown ${menuVisible ? 'open' : ''}`}>
-        <Link className='menu-link' to='/'>Etusivu</Link>
-        <Link className='menu-link' to='/hinnasto'>Hinnasto</Link>
-        <Link className='menu-link' to='/ennimaria'>Enni-Maria</Link>
-        <Link className='menu-link' to='/mikadoula'>Mikä doula?</Link>
-        <Link className='menu-link' to='/yhteys'>Ota yhteyttä</Link>
-        <Link className='menu-link' to='/rukous'>Rukous</Link>
+        <Link className='menu-link' to='/' onClick={handleLinkClick}>Etusivu </Link>
+        <Link className='menu-link' to='/hinnasto' onClick={handleLinkClick}>Hinnasto</Link>
+        <Link className='menu-link' to='/ennimaria' onClick={handleLinkClick}>Enni-Maria</Link>
+        <Link className='menu-link' to='/mikadoula' onClick={handleLinkClick}>Mikä doula?</Link>
+        <Link className='menu-link' to='/yhteys' onClick={handleLinkClick}>Ota yhteyttä</Link>
+        <Link className='menu-link' to='/rukous' onClick={handleLinkClick}>Rukous</Link>
       </nav>
     </div>
   )
