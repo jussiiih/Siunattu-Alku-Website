@@ -75,7 +75,8 @@ messagesRouter.post('/', async (request, response) => {
         email: body.email,
         content: body.content,
         feedbackPublic: body.feedbackPublic,
-        timestamp: new Date().toLocaleString('fi-FI', { timeZone: 'Europe/Helsinki' })
+        timestamp: new Date().toLocaleString('fi-FI', { timeZone: 'Europe/Helsinki' }),
+        seen: false
     })
 
 
@@ -133,5 +134,9 @@ messagesRouter.delete('/:id', async (request, response) => {
         response.status(500).json({ error: 'something went wrong while deleting' })
     }
 })
+
+/*messagesRouter.put('/:id', async (request, response) => {
+    const id = request.params.id
+}*/
 
 module.exports = messagesRouter

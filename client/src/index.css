@@ -170,9 +170,12 @@ padding: 1rem;
 }
 
 table {
-  border-collapse: collapse;
+  
   width: 50%;
+  border-spacing: 0 10px
 }
+
+
 
 td {
   border: 1px solid black;

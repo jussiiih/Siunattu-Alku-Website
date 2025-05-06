@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const prayerSchema = new mongoose.Schema({
     timestamp: String,
     content: String,
+    seen: Boolean
 
 })
 

@@ -24,5 +24,9 @@ const deleteMessage = (messageToBeRemoved) => {
     return axios.delete(`${baseUrl}/${messageToBeRemoved.id}`)
 }
 
-export default { getAllMessages, createMessage, deleteMessage, setToken }
+const changeSeenAttribute = (message) => {
+    return axios.put(`${baseUrl}/${message.id}`)
+}
+
+export default { getAllMessages, createMessage, deleteMessage, changeSeenAttribute, setToken }
 

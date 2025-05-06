@@ -7,7 +7,8 @@ const messageSchema = new mongoose.Schema({
     phoneNumber: String,
     email: String,
     content: String,
-    feedbackPublic: String
+    feedbackPublic: String,
+    seen: Boolean
 })
 
 messageSchema.set('toJSON', {

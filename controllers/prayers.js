@@ -52,7 +52,8 @@ prayesRouter.post('/', async (request, response) => {
 
     const prayer = new Prayer({
         content: body.content,
-        timestamp: new Date().toLocaleString('fi-FI', { timeZone: 'Europe/Helsinki' })
+        timestamp: new Date().toLocaleString('fi-FI', { timeZone: 'Europe/Helsinki' }),
+        seen: false
     })
 
 
