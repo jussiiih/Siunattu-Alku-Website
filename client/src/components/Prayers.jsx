@@ -30,6 +30,7 @@ const prayers = ({ admin }) => {
   return (
   prayers.map(prayer =>
       <div key={prayer.id}>
+      <p>{new Date(prayer.timestamp).toLocaleString('fi-FI', { timeZone: 'Europe/Helsinki' })}<br/></p>
       <p>
           Rukouspyyntö: {prayer.content}<br/>
       </p>

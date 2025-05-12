@@ -23,7 +23,7 @@ messagesRouter.get('/', async (request, response) => {
         return response.status(401).json({ error: 'token missing' })
     }
 
-    const decodedToken = jwt.verify(getTokenFrom(request), config.SECRET)
+    const decodedToken = jwt.verify(token, config.SECRET)
     if (!decodedToken.username) {
         return response.status(401).json({ error: 'token invalid' })
     }
@@ -75,7 +75,7 @@ messagesRouter.post('/', async (request, response) => {
         email: body.email,
         content: body.content,
         feedbackPublic: body.feedbackPublic,
-        timestamp: new Date().toLocaleString('fi-FI', { timeZone: 'Europe/Helsinki' }),
+        timestamp: new Date().toISOString(),
         seen: false
     })
 
@@ -135,8 +135,31 @@ messagesRouter.delete('/:id', async (request, response) => {
     }
 })
 
-/*messagesRouter.put('/:id', async (request, response) => {
-    const id = request.params.id
-}*/
+messagesRouter.put('/:id', async (request, response) => {
+
+    const token = getTokenFrom(request)
+
+    if (!token) {
+        return response.status(401).json({ error: 'token missing' })
+    }
+
+    const decodedToken = jwt.verify(token, config.SECRET)
+    if (!decodedToken.username) {
+        return response.status(401).json({ error: 'token invalid' })}
+
+    try {
+        const updatedMessage = await Message.findById(request.params.id)
+        if (!updatedMessage) {
+            return response.status(404).json({ error: 'message not found' })
+        }
+
+        updatedMessage.seen = !updatedMessage.seen
+        const savedMessage = await updatedMessage.save()
+        response.json(savedMessage)
+    } catch (error) {
+        logger.error('Error updating message:', error)
+        response.status(500).json({ error: 'something went wrong while updating' })
+    }
+})
 
 module.exports = messagesRouter

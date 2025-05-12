@@ -24,8 +24,12 @@ const deleteMessage = (messageToBeRemoved) => {
     return axios.delete(`${baseUrl}/${messageToBeRemoved.id}`)
 }
 
-const changeSeenAttribute = (message) => {
-    return axios.put(`${baseUrl}/${message.id}`)
+const changeSeenAttribute = async (message) => {
+    const config = {
+        headers: { Authorization: token }
+    }
+    const response = await axios.put(`${baseUrl}/${message.id}`, {}, config)
+    return response.data
 }
 
 export default { getAllMessages, createMessage, deleteMessage, changeSeenAttribute, setToken }

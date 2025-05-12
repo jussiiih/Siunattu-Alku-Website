@@ -11,6 +11,20 @@ const Messages = ({ admin }) => {
           setMessages(messages.filter(message => message.id !== messageToBeRemoved.id))
         })
     }
+
+    const toggleSeenAttribute = id => {
+      const messageToBeUpdated = messages.find(message => message.id === id)
+      const changedMessage = { ... messageToBeUpdated, seen: !messageToBeUpdated.seen }
+      messageService.changeSeenAttribute(changedMessage)
+      .then(() => {
+        setMessages(messages.map(message => 
+          message.id !== id ? message : changedMessage
+        ))
+      })
+      .catch(error => {
+        console.error('Failed to toggle seen attribute:', error)
+      })
+    }
   
     useEffect(() => {
       if (admin) {
@@ -18,7 +32,6 @@ const Messages = ({ admin }) => {
           .getAllMessages()
           .then(response => {
             setMessages(response)
-            console.log(messages)
           })
           .catch(error => {
             console.error('Failed to fetch messages:', error)
@@ -26,16 +39,47 @@ const Messages = ({ admin }) => {
       }
     }, [admin])
     
+const sortMessages = (messageList, sortBy, direction = 'desc') => {
+  const compareFunction = (a, b) => {
+    if (a[sortBy] < b[sortBy]) return direction === 'asc' ? -1 : 1
+    if (a[sortBy] > b[sortBy]) return direction === 'asc' ? 1 : -1
+    return 0
+  }
+  setMessages(messageList.sort(compareFunction))
+}
 
 
   return (
+<div>
+<label htmlFor="sortMessages">Lajittele</label>
+<select
+  name="sortMessages"
+  onChange={e => {
+    const value = e.target.value
+    if (value === 'newestToOldest') {
+      sortMessages([...messages], 'timestamp', 'desc')
+    } else if (value === 'OldestToNewest') {
+      sortMessages([...messages], 'timestamp', 'asc')
+    } else if (value === 'NameAlpahmeticalAscenging') {
+      sortMessages([...messages], 'name', 'asc')
+    } else if (value === 'NameAlpahmeticalDescending') {
+      sortMessages([...messages], 'name', 'desc')
+    }
+
+  }}
+>
+  <option value="newestToOldest">Uusimmasta vanhimpaan</option>
+  <option value="OldestToNewest">Vanhimmasta uusimpaan</option>
+  <option value="NameAlpahmeticalAscenging">Nimi A-Ö</option>
+  <option value="NameAlpahmeticalDescending">Nimi Ö-Ä</option>
+</select>
 
 <table>
   <tbody>
     {messages.map(message => (
       <tr key={message.id}>
         <td>
-          {message.timestamp}<br/>
+          {new Date(message.timestamp).toLocaleString('fi-FI', { timeZone: 'Europe/Helsinki' })}<br/>
           Aihe: {message.messageType}<br/>
           {message.messageType === "Palaute" && (
             <span>Palautteen saa julkaista: {message.feedbackPublic}</span>
@@ -46,8 +90,21 @@ const Messages = ({ admin }) => {
           Sähköposti: {message.email}<br/>
 
         </td>
-        <td>
-          <p>{message.seen === true ? "Nähty" : "Ei nähty"}</p>
+        <td style={{ backgroundColor: message.seen ? '#66ff66' : '#ff704d' }}>
+        <div>
+          {message.seen === true ? (
+            <>
+              <p>Nähty</p>
+              <button onClick={() => toggleSeenAttribute(message.id)}>Merkitse lukemattomaksi</button>
+            </>
+          )
+          : (
+            <>
+              <p>Ei nähty</p>
+              <button onClick={() => toggleSeenAttribute(message.id)}>Merkitse luetuksi</button>
+            </>
+          )}
+        </div>
       </td>
         <td style={{ textAlign: 'center', verticalAlign: 'middle' }}>
           <button onClick={() => deleteMessage(message)}>
@@ -58,6 +115,8 @@ const Messages = ({ admin }) => {
     ))}
   </tbody>
 </table>
+
+</div>
   )
     
 }
