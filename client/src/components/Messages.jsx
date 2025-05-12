@@ -2,7 +2,10 @@ import messageService from "../services/messages"
 import { useState, useEffect } from "react"
 
 const Messages = ({ admin }) => { 
-    const [messages, setMessages] = useState([])  
+    const [messages, setMessages] = useState([])
+    const [searchText, setSearchText] = useState("")
+    const [showAllMessages, setShowAllMessages] = useState(true)
+ 
   
     const deleteMessage = (messageToBeRemoved) => {
       messageService
@@ -48,6 +51,17 @@ const sortMessages = (messageList, sortBy, direction = 'desc') => {
   setMessages(messageList.sort(compareFunction))
 }
 
+  const handleSearchTextChange = (event) => {
+    setSearchText(event.target.value)
+    if (event.target.value !== '') {
+      setShowAllMessages(false)
+    }
+  }
+
+  const messagesToShow = showAllMessages
+    ? messages
+    : messages.filter(message => message.content.toLowerCase().includes(searchText.toLowerCase()))
+
 
   return (
 <div>
@@ -74,9 +88,15 @@ const sortMessages = (messageList, sortBy, direction = 'desc') => {
   <option value="NameAlpahmeticalDescending">Nimi Ö-Ä</option>
 </select>
 
+<form>
+  Hae viestin sisällöstä: <input value={searchText} onChange={handleSearchTextChange}></input>
+</form>
+
+
 <table>
   <tbody>
-    {messages.map(message => (
+
+    {messagesToShow.map(message => (
       <tr key={message.id}>
         <td>
           {new Date(message.timestamp).toLocaleString('fi-FI', { timeZone: 'Europe/Helsinki' })}<br/>
