@@ -1,10 +1,10 @@
 import messageService from "../services/messages"
 import { useState, useEffect } from "react"
 
-const Messages = ({ admin }) => { 
-    const [messages, setMessages] = useState([])
+const Messages = ({ admin, messages, setMessages }) => {
     const [searchText, setSearchText] = useState("")
     const [showAllMessages, setShowAllMessages] = useState(true)
+    const [messageTypeShown, setMessageTypeShown] = useState("Yhteydenottopyyntö")
  
   
     const deleteMessage = (messageToBeRemoved) => {
@@ -29,18 +29,19 @@ const Messages = ({ admin }) => {
       })
     }
   
-    useEffect(() => {
-      if (admin) {
-        messageService
-          .getAllMessages()
-          .then(response => {
-            setMessages(response)
-          })
-          .catch(error => {
-            console.error('Failed to fetch messages:', error)
-          })
-      }
-    }, [admin])
+
+  useEffect(() => {
+    if (admin && messages.length === 0) {
+      messageService
+        .getAllMessages()
+        .then(response => {
+          setMessages(response)
+        })
+        .catch(error => {
+          console.error('Failed to fetch messages:', error)
+        })
+    }
+  }, [admin, messages, setMessages])
     
 const sortMessages = (messageList, sortBy, direction = 'desc') => {
   const compareFunction = (a, b) => {
@@ -65,6 +66,17 @@ const sortMessages = (messageList, sortBy, direction = 'desc') => {
 
   return (
 <div>
+<button onClick={() => setMessageTypeShown("Yhteydenottopyyntö")}>
+Yhteydenottopyynnöt
+</button>
+<button onClick={() => setMessageTypeShown("Palaute")}>
+Palautteet
+</button>
+<button onClick={() => setMessageTypeShown("Muu")}>
+Muut viestit
+</button>
+<br></br>
+
 <label htmlFor="sortMessages">Lajittele</label>
 <select
   name="sortMessages"
@@ -96,7 +108,7 @@ const sortMessages = (messageList, sortBy, direction = 'desc') => {
 <table>
   <tbody>
 
-    {messagesToShow.map(message => (
+    {messagesToShow.filter(message => message.messageType === messageTypeShown).map(message => (
       <tr key={message.id}>
         <td>
           {new Date(message.timestamp).toLocaleString('fi-FI', { timeZone: 'Europe/Helsinki' })}<br/>

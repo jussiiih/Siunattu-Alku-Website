@@ -15,3 +15,5 @@
 | 2.5. | 8    | css draft, prayer requests, screen messages |
 | 5.5. | 6    | css enhancing, menu to hamburger model, refactoring frontend |
 | 6.5. | 1    | message list to table, seen-attribute to messages |
+| 12.5. | 2    | message list updated, sorting and filtering enabled |
+| 13.5. | 0.5    | admin view: unread messages count shown, messagetype filtering |
