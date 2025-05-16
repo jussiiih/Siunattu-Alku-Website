@@ -1,7 +1,7 @@
 import messageService from "../services/messages"
 import { useState, useEffect } from "react"
 
-const Messages = ({ admin, messages, setMessages }) => {
+const Messages = ({ messages, setMessages }) => {
     const [searchText, setSearchText] = useState("")
     const [showAllMessages, setShowAllMessages] = useState(true)
     const [messageTypeShown, setMessageTypeShown] = useState("Yhteydenottopyyntö")

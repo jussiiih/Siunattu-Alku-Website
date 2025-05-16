@@ -1,7 +1,7 @@
 import prayerService from "../services/prayers"
 import { useState, useEffect } from "react"
 
-const prayers = ({ admin, prayers, setPrayers }) => { 
+const prayers = ({ prayers, setPrayers }) => { 
   const [searchText, setSearchText] = useState("")  
   const [showAllPrayers, setShowAllPrayers] = useState(true)
   
@@ -28,28 +28,20 @@ const prayers = ({ admin, prayers, setPrayers }) => {
     })
   }
   
-  useEffect(() => {
-    if (admin && prayers.length === 0) {
-      prayerService
-        .getAllPrayers()
-        .then(response => {
-          setPrayers([...response].sort((a, b) => b.timestamp - a.timestamp))
-        })
-        .catch(error => {
-          console.error('Failed to fetch prayers:', error)
-        })
-    }
-  }, [admin, prayers, setPrayers])
 
 
-  const sortPrayers = (prayerList, sortBy, direction = 'desc') => {
-    const compareFunction = (a, b) => {
-      if (a[sortBy] < b[sortBy]) return direction === 'asc' ? -1 : 1
-      if (a[sortBy] > b[sortBy]) return direction === 'asc' ? 1 : -1
-      return 0
-    }
-    setPrayers([...prayerList].sort(compareFunction))
+
+const sortPrayers = (prayerList, sortBy, direction = 'desc') => {
+  const compareFunction = (a, b) => {
+    let valA = a[sortBy]
+    let valB = b[sortBy]
+
+    if (valA < valB) return direction === 'asc' ? -1 : 1
+    if (valA > valB) return direction === 'asc' ? 1 : -1
+    return 0
   }
+  setPrayers([...prayerList].sort(compareFunction))
+}
 
   const handleSearchTextChange = (event) => {
     setSearchText(event.target.value)
@@ -69,6 +61,7 @@ const prayers = ({ admin, prayers, setPrayers }) => {
   <div>
     <label htmlFor="sortPrayers">Järjestä</label>
     <select
+      id="sortPrayers"
       name="sortPrayers"
       onChange={e => {
         const value = e.target.value

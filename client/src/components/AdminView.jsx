@@ -35,7 +35,7 @@ const Admin = ({ admin }) => {
         prayerService
           .getAllPrayers()
           .then(response => {
-            setPrayers(([...response].sort((a, b) => b.timestamp - a.timestamp)))
+            setPrayers([...response].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)))
           })
           .catch(error => {
             console.error('Failed to fetch prayers:', error)
@@ -57,9 +57,9 @@ const Admin = ({ admin }) => {
 
       <Routes>
         <Route path='/viestit' element={
-          <Messages admin={admin} messages={messages} setMessages={setMessages} />} />
+          <Messages messages={messages} setMessages={setMessages} />} />
         <Route path='/rukous' element={
-          <Prayers admin={admin} prayers={prayers} setPrayers={setPrayers} />} />
+          <Prayers prayers={prayers} setPrayers={setPrayers} />} />
         <Route path='/kirjautumishistoria' element={<LoginRecords admin={admin} />} />
       </Routes>
     </div>
