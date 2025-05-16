@@ -138,7 +138,10 @@ Palautteet
         </div>
       </td>
         <td style={{ textAlign: 'center', verticalAlign: 'middle' }}>
-          <button onClick={() => deleteMessage(message)}>
+          <button onClick={() => {
+            if (window.confirm(`Haluatko varmasti poistaa viestin, joka jätetty ${new Date(message.timestamp).toLocaleString('fi-FI', { timeZone: 'Europe/Helsinki' })}?\n\nViestiä ei voida tämän jälkeen enää palauttaa.`)){
+            deleteMessage(message)}}
+          }>
             Poista viesti
           </button>
         </td>

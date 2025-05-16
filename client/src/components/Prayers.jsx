@@ -108,7 +108,10 @@ const sortPrayers = (prayerList, sortBy, direction = 'desc') => {
         </div>
       </td>
         <td style={{ textAlign: 'center', verticalAlign: 'middle' }}>
-          <button onClick={() => deletePrayer(prayer)}>
+          <button onClick={() => {
+            if (window.confirm(`Haluatko varmasti poistaa rukouspyynnön, joka jätetty ${new Date(prayer.timestamp).toLocaleString('fi-FI', { timeZone: 'Europe/Helsinki' })}?\n\nRukouspyyntöä ei voida tämän jälkeen enää palauttaa.`)){
+            deletePrayer(prayer)}}
+          }>
             Poista viesti
           </button>
         </td>
