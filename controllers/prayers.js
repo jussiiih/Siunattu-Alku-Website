@@ -1,4 +1,4 @@
-const prayesRouter = require('express').Router()
+const prayersRouter = require('express').Router()
 const Prayer = require('../models/prayer')
 const logger = require('../utils/logger')
 const config = require('../utils/config')
@@ -16,7 +16,7 @@ const getTokenFrom = request => {
     return null
 }
 
-prayesRouter.get('/', async (request, response) => {
+prayersRouter.get('/', async (request, response) => {
     const token = getTokenFrom(request)
 
     if (!token) {
@@ -47,7 +47,7 @@ prayesRouter.get('/', async (request, response) => {
     }
 })
 
-prayesRouter.post('/', async (request, response) => {
+prayersRouter.post('/', async (request, response) => {
     const body = request.body
 
     const prayer = new Prayer({
@@ -85,7 +85,7 @@ prayesRouter.post('/', async (request, response) => {
     }
 })
 
-prayesRouter.delete('/:id', async (request, response) => {
+prayersRouter.delete('/:id', async (request, response) => {
     const id = request.params.id
 
     try {
@@ -103,4 +103,31 @@ prayesRouter.delete('/:id', async (request, response) => {
     }
 })
 
-module.exports = prayesRouter
+prayersRouter.put('/:id', async (request, response) => {
+
+    const token = getTokenFrom(request)
+
+    if (!token) {
+        return response.status(401).json({ error: 'token missing' })
+    }
+
+    const decodedToken = jwt.verify(token, config.SECRET)
+    if (!decodedToken.username) {
+        return response.status(401).json({ error: 'token invalid' })}
+
+    try {
+        const updatedPrayer = await Prayer.findById(request.params.id)
+        if (!updatedPrayer) {
+            return response.status(404).json({ error: 'message not found' })
+        }
+
+        updatedPrayer.seen = !updatedPrayer.seen
+        const savedPrayer = await updatedPrayer.save()
+        response.json(savedPrayer)
+    } catch (error) {
+        logger.error('Error updating message:', error)
+        response.status(500).json({ error: 'something went wrong while updating' })
+    }
+})
+
+module.exports = prayersRouter

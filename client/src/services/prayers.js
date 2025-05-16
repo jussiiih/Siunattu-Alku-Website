@@ -24,5 +24,13 @@ const deletePrayer = (prayerToBeRemoved) => {
     return axios.delete(`${baseUrl}/${prayerToBeRemoved.id}`)
 }
 
-export default { getAllPrayers, createPrayer, deletePrayer, setToken }
+const changeSeenAttribute = async (prayer) => {
+    const config = {
+        headers: { Authorization: token }
+    }
+    const response = await axios.put(`${baseUrl}/${prayer.id}`, {}, config)
+    return response.data
+}
+
+export default { getAllPrayers, createPrayer, deletePrayer, changeSeenAttribute, setToken }
 

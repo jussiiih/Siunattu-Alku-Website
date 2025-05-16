@@ -30,26 +30,23 @@ const Messages = ({ admin, messages, setMessages }) => {
     }
   
 
-  useEffect(() => {
-    if (admin && messages.length === 0) {
-      messageService
-        .getAllMessages()
-        .then(response => {
-          setMessages(response)
-        })
-        .catch(error => {
-          console.error('Failed to fetch messages:', error)
-        })
-    }
-  }, [admin, messages, setMessages])
     
 const sortMessages = (messageList, sortBy, direction = 'desc') => {
   const compareFunction = (a, b) => {
-    if (a[sortBy] < b[sortBy]) return direction === 'asc' ? -1 : 1
-    if (a[sortBy] > b[sortBy]) return direction === 'asc' ? 1 : -1
+    let valA = a[sortBy]
+    let valB = b[sortBy]
+
+    if (sortBy === 'name') {
+      valA = (valA || '').toLowerCase()
+      valB = (valB || '').toLowerCase()
+    }
+
+    if (valA < valB) return direction === 'asc' ? -1 : 1
+    if (valA > valB) return direction === 'asc' ? 1 : -1
     return 0
   }
-  setMessages(messageList.sort(compareFunction))
+
+  setMessages([...messageList].sort(compareFunction))
 }
 
   const handleSearchTextChange = (event) => {
@@ -66,19 +63,21 @@ const sortMessages = (messageList, sortBy, direction = 'desc') => {
 
   return (
 <div>
-<button onClick={() => setMessageTypeShown("Yhteydenottopyyntö")}>
-Yhteydenottopyynnöt
+<button style={{ fontWeight: messageTypeShown === "Yhteydenottopyyntö" ? 'bold' : 'normal' }}
+  onClick={() => setMessageTypeShown("Yhteydenottopyyntö")}>Yhteydenottopyynnöt
 </button>
-<button onClick={() => setMessageTypeShown("Palaute")}>
+<button style={{ fontWeight: messageTypeShown === "Palaute" ? 'bold' : 'normal' }}
+  onClick={() => setMessageTypeShown("Palaute")}>
 Palautteet
 </button>
-<button onClick={() => setMessageTypeShown("Muu")}>
-Muut viestit
+<button style={{ fontWeight: messageTypeShown === "Muu" ? 'bold' : 'normal' }}
+  onClick={() => setMessageTypeShown("Muu")}>Muut viestit
 </button>
 <br></br>
 
-<label htmlFor="sortMessages">Lajittele</label>
+<label htmlFor="sortMessages">Järjestä</label>
 <select
+  id="sortMessages"
   name="sortMessages"
   onChange={e => {
     const value = e.target.value
@@ -86,9 +85,9 @@ Muut viestit
       sortMessages([...messages], 'timestamp', 'desc')
     } else if (value === 'OldestToNewest') {
       sortMessages([...messages], 'timestamp', 'asc')
-    } else if (value === 'NameAlpahmeticalAscenging') {
+    } else if (value === 'nameAsc') {
       sortMessages([...messages], 'name', 'asc')
-    } else if (value === 'NameAlpahmeticalDescending') {
+    } else if (value === 'nameDesc') {
       sortMessages([...messages], 'name', 'desc')
     }
 
@@ -96,8 +95,8 @@ Muut viestit
 >
   <option value="newestToOldest">Uusimmasta vanhimpaan</option>
   <option value="OldestToNewest">Vanhimmasta uusimpaan</option>
-  <option value="NameAlpahmeticalAscenging">Nimi A-Ö</option>
-  <option value="NameAlpahmeticalDescending">Nimi Ö-Ä</option>
+ <option value="nameAsc">Nimi A-Ö</option>
+<option value="nameDesc">Nimi Ö-Ä</option>
 </select>
 
 <form>
