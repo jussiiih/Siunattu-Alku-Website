@@ -27,4 +27,11 @@ const deleteLoginRecord = (RecordToBeRemoved) => {
     return axios.delete(`${baseUrl}/${RecordToBeRemoved.id}`, config)
 }
 
-export default { login, getLoginRecords, deleteLoginRecord, setToken }
+const deleteAllLoginRecords = () => {
+    const config = {
+        headers: { Authorization: token }
+    }
+    return axios.delete(`${baseUrl}/`, config)
+}
+
+export default { login, getLoginRecords, deleteLoginRecord, deleteAllLoginRecords, setToken }

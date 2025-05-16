@@ -11,6 +11,14 @@ const LoginRecords = ({ admin }) => {
           setLoginRecords(loginRecords.filter(loginRecord => loginRecord.id !== recordToBeRemoved.id))
         })
     }
+
+    const deleteAllLoginRecords = () => {
+      loginService
+        .deleteAllLoginRecords()
+        .then(() => {
+          setLoginRecords([])
+        })
+    }
   
     useEffect(() => {
       if (admin) {
@@ -28,7 +36,14 @@ const LoginRecords = ({ admin }) => {
 
 
   return (
-  loginRecords.map(LoginRecord =>
+  <div>
+    <button onClick={() => {
+      if (window.confirm('Haluatko varmasti poistaa kaikki kirjaumistiedot?\n\nTätä toimintoa ei enää tämän jälkeen voi peruuttaa.')) {
+      deleteAllLoginRecords()
+      }}}>
+      Poista kaikki kirjautumistiedot
+    </button>
+    {loginRecords.map(LoginRecord =>
       <div key={LoginRecord.id}>
       <p>
           Aika: {LoginRecord.timestamp}<br/>
@@ -41,7 +56,8 @@ const LoginRecords = ({ admin }) => {
           Poista kirjautumistieto
       </button>
       </div>
-      )
+      )}
+  </div>
   )
     
 }

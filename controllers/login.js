@@ -131,4 +131,20 @@ loginRouter.delete('/:id', async (request, response) => {
     }
 })
 
+loginRouter.delete('/', async (request, response) => {
+    try {
+        const result = await LoginRecord.deleteMany({})
+
+        if (result) {
+            response.status(204).end()
+        } else {
+            response.status(404).json({ error: 'login record not found' })
+        }
+    }
+    catch (error) {
+        logger.error('Error deleting login record:', error)
+        response.status(500).json({ error: 'something went wrong while deleting all records' })
+    }
+})
+
 module.exports = loginRouter
