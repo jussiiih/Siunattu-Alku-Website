@@ -17,7 +17,7 @@ const App = () => {
     <Router>
     <header className="header-container">
       <div className="title-container">
-        <Title />
+        <Title/>
       </div>
       <Menu />
     </header>
