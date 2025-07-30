@@ -7,7 +7,7 @@ const Admin = () => {
   return (
     <>
       {!admin && <LoginForm setAdmin={setAdmin} />}
-      {admin && <AdminView admin={admin} />}
+      {admin && <AdminView admin={admin} setAdmin={setAdmin} />}
     </>
   )
 }

@@ -110,6 +110,7 @@ font-weight: bold;
 
 a:hover:not(footer a) {
 background-color: white;
+color: rgb(167, 16, 167);
 }
 
 form {

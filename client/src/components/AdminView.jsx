@@ -7,7 +7,7 @@ import messageService from "../services/messages"
 import prayerService from "../services/prayers"
 
 
-const Admin = ({ admin }) => { 
+const Admin = ({ admin, setAdmin }) => { 
 
   const padding = {
     padding: 5
@@ -45,6 +45,11 @@ const Admin = ({ admin }) => {
 
   const unreadMessages = messages.filter(message => !message.seen).length
   const unreadPrayers = prayers.filter(prayer => !prayer.seen).length
+
+  const handleLogout = () => {
+    setAdmin(null)
+    navigate('/admin') // redirect to login page or root
+  }
     
   return (
     <div>
@@ -52,6 +57,9 @@ const Admin = ({ admin }) => {
         <Link style={padding} to='/admin/viestit'>Viestit ({unreadMessages})</Link>
         <Link style={padding} to='/admin/rukous'>Rukouspyynnöt ({unreadPrayers})</Link>
         <Link style={padding} to='/admin/kirjautumishistoria'>Kirjautumishistoria</Link>
+        <button onClick={handleLogout} style={{ marginLeft: 10 }}>
+          Kirjaudu ulos
+        </button>
         
       </div>
 
