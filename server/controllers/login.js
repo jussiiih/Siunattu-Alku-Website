@@ -48,39 +48,40 @@ loginRouter.post('/', async (request, response) => {
         timer: 0,
         lastAttempt: currentTime,
     }
+    if (process.env.NODE_ENV !== 'test'){
+        const ip =
+            request.headers['x-forwarded-for']?.split(',')[0] ||
+            request.connection.remoteAddress
 
-    const ip =
-        request.headers['x-forwarded-for']?.split(',')[0] ||
-        request.connection.remoteAddress
+        let location = 'Unknown location'
 
-    let location = 'Unknown location'
+        try {
+            const geoRes = await axios.get(`http://ip-api.com/json/${ip}?fields=country,regionName,city,status,message`)
+            const data = geoRes.data
 
-    try {
-        const geoRes = await axios.get(`http://ip-api.com/json/${ip}?fields=country,regionName,city,status,message`)
-        const data = geoRes.data
-
-        if (data.status === 'success') {
-            location = `${data.city}, ${data.regionName}, ${data.country}`
-        } else {
-            console.warn('GeoIP lookup failed:', data.message)
+            if (data.status === 'success') {
+                location = `${data.city}, ${data.regionName}, ${data.country}`
+            } else {
+                console.warn('GeoIP lookup failed:', data.message)
+            }
+        } catch (err) {
+            console.error('GeoIP error:', err.message)
         }
-    } catch (err) {
-        console.error('GeoIP error:', err.message)
-    }
 
-    const loginRecord = new LoginRecord({
-        username,
-        timestamp: new Date().toLocaleString('fi-FI', { timeZone: 'Europe/Helsinki' }),
-        ip,
-        userAgent: request.headers['user-agent'],
-        location
-    })
+        const loginRecord = new LoginRecord({
+            username,
+            timestamp: new Date().toLocaleString('fi-FI', { timeZone: 'Europe/Helsinki' }),
+            ip,
+            userAgent: request.headers['user-agent'],
+            location
+        })
 
-    try {
-        await loginRecord.save()
-        console.log('Login attempt saved to DB')
-    } catch (err) {
-        console.error('Failed to save login attempt:', err.message)
+        try {
+            await loginRecord.save()
+            console.log('Login attempt saved to DB')
+        } catch (err) {
+            console.error('Failed to save login attempt:', err.message)
+        }
     }
 })
 
