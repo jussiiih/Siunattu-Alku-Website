@@ -9,24 +9,24 @@ const api = supertest(app)
 describe('two messages in database', () => {
     const initialMessages = [
         {
-            "timestamp": "24.4.2025 klo 10.29.41",
-            "name": "Marjatta",
-            "phoneNumber": "040112314",
-            "email": "example@email.com",
-            "content": "This is a test message",
-            "id": "6809e865105a13104131ccf6"
+            'timestamp': '24.4.2025 klo 10.29.41',
+            'name': 'Marjatta',
+            'phoneNumber': '040112314',
+            'email': 'example@email.com',
+            'content': 'This is a test message',
+            'id': '6809e865105a13104131ccf6'
         },
-    
+
         {
-            "timestamp": "24.4.2025 klo 10.32.41",
-            "name": "Matti",
-            "phoneNumber": "050112314",
-            "email": "example2@email.com",
-            "content": "This is another test message",
-            "id": "6809e865105a13104131aaf6"
+            'timestamp': '24.4.2025 klo 10.32.41',
+            'name': 'Matti',
+            'phoneNumber': '050112314',
+            'email': 'example2@email.com',
+            'content': 'This is another test message',
+            'id': '6809e865105a13104131aaf6'
         }
     ]
-    
+
     beforeEach(async () => {
         await Message.deleteMany({})
         let messageObject = new Message(initialMessages[0])
@@ -41,12 +41,12 @@ describe('two messages in database', () => {
             .expect(200)
             .expect('Content-Type', /application\/json/)
     })
-    
+
     test('all messages are returned', async () => {
         const response = await api.get('/api/messages')
         assert.strictEqual(response.body.lenght, initialMessages.lenght)
     })
-    
+
     test('content field matches', async () => {
         const response = await api.get('/api/messages')
         assert.strictEqual(response.body[0].content, initialMessages[0].content)
@@ -64,13 +64,13 @@ describe('two messages in database', () => {
 describe('sending new message', () => {
     const messageToBeSent =
         {
-            "name": "Marjatta",
-            "phoneNumber": "040112314",
-            "email": "example@email.com",
-            "content": "This is a test message"
+            'name': 'Marjatta',
+            'phoneNumber': '040112314',
+            'email': 'example@email.com',
+            'content': 'This is a test message'
         }
 
-        
+
     beforeEach(async () => {
         await Message.deleteMany({})
     })
