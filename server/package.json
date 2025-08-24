@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "test": "cross-env NODE_ENV=test node --test ",
     "server": "json-server -p 3001 db.json",
-    "build:ui": "rimraf dist && cd client && npm run build && xcopy /E /I /Y dist ..\\dist"
+    "build:ui": "rimraf dist && cd .. && cd client && npm run build && xcopy /E /I /Y dist ..\\server\\dist"
   },
   "repository": {
     "type": "git",
