@@ -95,6 +95,11 @@ describe('two messages in database', () => {
         assert.strictEqual(response.body[0].content, initialMessages[0].content)
     })
 
+    test('new message is categorized as unseen', async () => {
+        const response = await api.get('/api/messages').set('Authorization', `Bearer ${token}`)
+        assert.strictEqual(response.body[0].seen, false)
+    })
+
     test('message can be deleted', async () => {
         const response1 = await api.get('/api/messages').set('Authorization', `Bearer ${token}`)
         const id = response1.body[0].id
@@ -102,37 +107,18 @@ describe('two messages in database', () => {
         const response2 = await api.get('/api/messages').set('Authorization', `Bearer ${token}`)
         assert.strictEqual(response2.body.length, initialMessages.length - 1)
     })
-})
 
-describe('sending new message', () => {
-    let token
-    const messageToBeSent =
-        {
-            'name': 'Marjatta',
-            'phoneNumber': '040112314',
-            'email': 'example@email.com',
-            'content': 'This is a test message'
-        }
+    test('seen attribute can be changed', async () => {
+        const responseToGetId = await api.get('/api/messages').set('Authorization', `Bearer ${token}`)
+        const id = responseToGetId.body[0].id
 
+        await api.put(`/api/messages/${id}`).set('Authorization', `Bearer ${token}`)
+        const responseUnseenToSeen = await api.get('/api/messages').set('Authorization', `Bearer ${token}`)
+        assert.strictEqual(responseUnseenToSeen.body[0].seen, true)
 
-    beforeEach(async () => {
-        if (mongoose.connection.readyState === 0) {
-            await mongoose.connect(MONGODB_URI)
-        }
-        await Message.deleteMany({})
-        const loginResponse = await api
-            .post('/api/login')
-            .send({ username: ADMIN_USERNAME, password: ADMIN_PASSWORD })
-            .expect(200)
-
-        token = loginResponse.body.token
-    })
-
-    test('sent message is in database', async () => {
-        await api.post('/api/messages').send(messageToBeSent).set('Authorization', `Bearer ${token}`)
-        const response = await api.get('/api/messages').set('Authorization', `Bearer ${token}`)
-        assert.strictEqual(response.body.length, 1)
-
+        await api.put(`/api/messages/${id}`).set('Authorization', `Bearer ${token}`)
+        const responseSeenToUnseen = await api.get('/api/messages').set('Authorization', `Bearer ${token}`)
+        assert.strictEqual(responseSeenToUnseen.body[0].seen, false)
     })
 })
 
